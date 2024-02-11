@@ -1,0 +1,32 @@
+.grid-cols-custom{
+    grid-template-columns: 1fr 3fr 1fr;
+    gap: 2rem;
+}
+.custom-min-h{
+    min-height: 60vh;
+}
+.grid-cols-custom-profile{
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 2rem;
+}
+.custom-add-input{
+    width: 30vw;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    color: #333;
+    border-bottom: 1px solid #222;
+    outline: none;
+}
+.custom-add-textarea{
+    width: 30vw;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    color: #333;
+    border-left: 1px solid #222;
+    border-right: 1px solid #222;
+    outline: none;
+}
+.custom-add-button{
+    padding: 0.5rem;
+    margin: 0.3rem 0;
+}
