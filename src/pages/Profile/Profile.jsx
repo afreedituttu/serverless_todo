@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { TasksContext } from '../../context/tasksContext'
 
 const Profile = () => {
+  const {tasks, setTaks} = useContext(TasksContext)
   return (
     <div className='wrapper'>
       <h1 className=' text-2xl'>Profile</h1>
@@ -15,18 +17,22 @@ const Profile = () => {
           <div className="current-tasks">
           <h1 className=' text-2xl'>Current tasks</h1>
             <ul>
-              <li className='p-1 bg-gray-300 my-1'>task 1</li>
-              <li className='p-1 bg-gray-300 my-1'>task 2</li>
-              <li className='p-1 bg-gray-300 my-1'>task 3</li>
+            {tasks.length>0?(tasks.map((task, index)=>{
+              if(task.status == 'not_completed'){
+                return <li key={index} className='p-1 bg-gray-300 my-1'>{task.task_name}</li>
+              }
+            })):("None")}
             </ul>
           </div>
           <div className="history">
           <h1 className=' text-2xl'>Completed</h1>
           <ul>
-              <li className='p-1 bg-gray-300 my-1'>task 1</li>
-              <li className='p-1 bg-gray-300 my-1'>task 2</li>
-              <li className='p-1 bg-gray-300 my-1'>task 3</li>
-            </ul>
+            {tasks.length>0?(tasks.map((task, index)=>{
+              if(task.status == 'completed'){
+                return <li key={index} className='p-1 bg-gray-300 my-1'>{task.task_name}</li>
+              }
+            })):("None")}
+          </ul>
           </div>
         </div>
     </div>
