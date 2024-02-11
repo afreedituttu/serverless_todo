@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { TasksContext } from "../../context/tasksContext";
+import { TasksContext } from "../../context/context";
 
 const Details = () => {
   const { taskId } = useParams()

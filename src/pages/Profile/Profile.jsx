@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { TasksContext } from '../../context/tasksContext'
+import { TasksContext } from '../../context/context'
 
 const Profile = () => {
   const {tasks, setTaks} = useContext(TasksContext)

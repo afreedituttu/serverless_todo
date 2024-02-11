@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import "./home.css";
 import { Link } from "react-router-dom";
 import Users from "../../components/Home/User";
-import { TasksContext } from "../../context/tasksContext";
+import { TasksContext } from "../../context/context";
 import AddTask from "../../components/Home/AddTask";
 
 const Home = () => {
