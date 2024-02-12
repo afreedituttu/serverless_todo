@@ -1,16 +1,18 @@
 import React, { useContext } from 'react'
-import { TasksContext } from '../../context/context'
+import { TasksContext, UserContext } from '../../context/context'
 
 const Profile = () => {
-  const {tasks, setTaks} = useContext(TasksContext)
+  const {tasks} = useContext(TasksContext)
+  const {activeUser} = useContext(UserContext)
+
   return (
     <div className='wrapper'>
       <h1 className=' text-2xl'>Profile</h1>
         <div className="container grid grid-cols-custom-profile">
           <div className="user-details">
-            <input value='data' type="text" name='name' className=' p-2 text-xl border-b-2 border-b-gray-400 my-2 w-full' />
-            <input value='data@gmail.com' type="email" name='email' className=' p-2 text-xl border-b-2 border-b-gray-400 my-2 w-full' />
-            <input value='0' type="number" name='age' className=' p-2 text-xl border-b-2 border-b-gray-400 my-2 w-full' />
+            <input value={activeUser.username} type="text" name='name' className=' p-2 text-xl border-b-2 border-b-gray-400 my-2 w-full' />
+            <input value={activeUser.password} type="email" name='email' className=' p-2 text-xl border-b-2 border-b-gray-400 my-2 w-full' />
+            <input value={activeUser.age} type="number" name='age' className=' p-2 text-xl border-b-2 border-b-gray-400 my-2 w-full' />
             <button className='px-3 py-1 bg-blue-800 m-1 text-white'>Update Profile</button>
             <button className='px-3 py-1 bg-red-800 m-1 text-white'>Delete</button>
           </div>

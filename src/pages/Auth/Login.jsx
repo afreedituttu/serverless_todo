@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { UserContext } from '../../context/context';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [show, setShow] = useState(false);
@@ -52,6 +52,7 @@ const Login = () => {
         <input name='username' onChange={onchange_data} value={user.username} type="text" className=' min-w-60 w-full outline-none border-b-2 border-b-gray-200 p-1 my-3' placeholder='username' />
         <input name='password' onChange={onchange_data} value={user.password} type="text" className=' min-w-60 w-full outline-none border-b-2 border-b-gray-200 p-1 my-3' placeholder='password' />
         <button onClick={LoginUser} type="submit" className=' min-w-60 w-full outline-none border-b-2 bg-green-500 p-1 my-3'>Login</button>
+        <Link to='/signup' className=' text-blue-600 underline'>Create account</Link>
       </div>
     </div>
   )

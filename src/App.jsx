@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Routes, Route, Outlet } from 'react-router-dom'
+import { Routes, Route, Outlet, Navigate } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Home from './pages/Home/Home'
@@ -11,8 +11,6 @@ import './index.css'
 import { UserContext } from './context/context'
 
 const App = () => {
-  const {activeUser} = useContext(UserContext)
-  console.log('App ',activeUser);
   return (<Routes>
   
     <Route path='/' element={<HomeLayout />} >
@@ -27,11 +25,16 @@ const App = () => {
 }
 
 const HomeLayout = ()=> {
-    return(<>
-        <Navbar />
-        <Outlet />
-        <Footer />
-    </>)
+  const {activeUser} = useContext(UserContext)
+  console.log('App ',activeUser);
+  if(!activeUser){
+    return <Navigate to='/login' />
+  }
+  return(<>
+      <Navbar />
+      <Outlet />
+      <Footer />
+  </>)
 }
 
 export default App
