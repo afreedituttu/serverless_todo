@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Routes, Route, Outlet } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -8,9 +8,13 @@ import Login from './pages/Auth/Login'
 import Signup from './pages/Auth/Signup'
 import Profile from './pages/Profile/Profile'
 import './index.css'
+import { UserContext } from './context/context'
 
 const App = () => {
+  const {activeUser} = useContext(UserContext)
+  console.log('App ',activeUser);
   return (<Routes>
+  
     <Route path='/' element={<HomeLayout />} >
         <Route index element={<Home />} />
         <Route exact path='/tasks/:taskId' element={<Details />} />

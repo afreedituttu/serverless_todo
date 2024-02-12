@@ -27,9 +27,9 @@ const AddTask = ({setTasks, setCurrentlyAdding, tasks}) => {
     return last_element_id + 1;
   };
   const addTask = () => {
+    task["taskId"] = gen_task_id();
+    task['status'] = 'not_completed'
     setTasks((old_tasks) => {
-      task["taskId"] = gen_task_id();
-      task['status'] = 'not_completed'
       return [...old_tasks, task];
     });
   };

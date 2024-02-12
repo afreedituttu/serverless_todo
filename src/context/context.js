@@ -10,12 +10,13 @@ export function TasksContextProvider(props) {
     </TasksContext.Provider>)
 }
 
-export const UserContext = createContext([]);
+export const UserContext = createContext();
 
 export function UserContextProvider(props) {
-    const [users, setUsers] = useState();
+    const [users, setUsers] = useState([]);
+    const [activeUser, setActiveUser] = useState();
 
-    return(<UserContext.Provider value={{users, setUsers}}>
+    return(<UserContext.Provider value={{users, setUsers, activeUser, setActiveUser}}>
         {props.children}
     </UserContext.Provider>)
 }
