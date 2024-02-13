@@ -1,20 +1,52 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./home.css";
 import { Link } from "react-router-dom";
 import Users from "../../components/Home/User";
-import { TasksContext } from "../../context/context";
+import { TasksContext, UserContext } from "../../context/context";
 import AddTask from "../../components/Home/AddTask";
+
 
 const Home = () => {
   const { tasks, setTasks } = useContext(TasksContext);
+  const {activeUser} = useContext(UserContext)
   const [currently_adding, setCurrentlyAdding] = useState(false);
-  console.log('home', tasks);
+  console.log('tasks ', tasks);
+  
+  function find_user_task(){
+    const temp_user_tasks = tasks.find((t)=>{
+      if(t.userId == activeUser.userId){
+        return t
+      }
+    })
+    if(!temp_user_tasks){
+      return []
+    }
+    return temp_user_tasks.tasks
+  }
+  
+  const [user_tasks, set_user_tasks] = useState(find_user_task())
+  console.log('usertasks ', user_tasks);
+
+  useEffect(()=>{
+    set_user_tasks(find_user_task())
+  }, [tasks])
+  
 
   const delete_task = (id) => {
     setTasks((old_tasks)=>{
       return old_tasks.filter(task=>task.taskId!=id)
     })
   }
+  const gen_task_id = () => {
+    var last_element_id;
+    if (user_tasks.length != 0) {
+      last_element_id = user_tasks[user_tasks.length - 1].taskId;
+    } else {
+      last_element_id = 0;
+    }
+    return last_element_id + 1;
+  };
+  
   return (
     <div className="wrapper">
       <h1 className=" text-2xl my-2">User name : Afreedi z</h1>
@@ -38,7 +70,7 @@ const Home = () => {
                 find
               </button>
             </div>
-            {tasks.map((task, index) => {
+            {user_tasks.map((task, index) => {
               if(task.status!='completed'){
                 return (
                 <li key={index} className="task flex justify-between p-1 border-b-2 border-b-gray-500">
@@ -66,7 +98,7 @@ const Home = () => {
           <div
             className="add"
             onClick={() => {
-              setCurrentlyAdding((old) => {
+              setCurrentlyAdding(() => {
                 return true;
               });
             }}
@@ -75,7 +107,7 @@ const Home = () => {
               + Add Task
             </button>
           </div>
-          {currently_adding ? <AddTask tasks={tasks} setCurrentlyAdding={setCurrentlyAdding} setTasks={setTasks} /> : (
+          {currently_adding ? <AddTask activeUser={activeUser} gen_task_id={gen_task_id} tasks={tasks} setCurrentlyAdding={setCurrentlyAdding} setTasks={setTasks} /> : (
             ""
           )}
         </div>

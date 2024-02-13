@@ -1,32 +1,65 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { TasksContext } from "../../context/context";
+import { TasksContext, UserContext } from "../../context/context";
 
 const Details = () => {
   const { taskId } = useParams()
   const {tasks, setTasks} = useContext(TasksContext)
+  const {activeUser} = useContext(UserContext)
   const [task, setTask] = useState({})
   const [state, setState] = useState(undefined)
 
+  function find_user_task(){
+    const temp_user_tasks = tasks.find((t)=>{
+      if(t.userId == activeUser.userId){
+        return t
+      }
+    })
+    if(!temp_user_tasks){
+      return []
+    }
+    return temp_user_tasks.tasks
+  }
+  
+  const user_tasks = find_user_task();
+
+  console.log('usertasks ', user_tasks);
+
   useEffect(()=>{
     function fetchTask(id){
-      const result = tasks.filter((e)=>{
+      const result = user_tasks.find((e)=>{
         if(e.taskId===parseInt(id)){
           return e
         }
       })
-      setTask(...result)
+      setTask(result)
     }
     fetchTask(taskId)
   }, [])
 
   const complete_task = (id)=> {
-    setTasks(()=>{
-      return tasks.map((e)=>{
-        if(e.taskId == id){
-          e['status'] = 'completed'
+    setTasks((old_tasks)=>{
+      return old_tasks.map((e)=>{
+        if(e.userId == activeUser.userId){
+          function modify_task(){
+            return e.tasks.map((t)=>{
+              if(t.taskId == id){
+                return {
+                  ...t,
+                  'status':'completed'
+                }
+              }else{
+                return t
+              }
+            })
+          }
+          
+          return {
+            userID:activeUser.userID,
+            tasks:modify_task()
+          }          
         }
-        return e;
+        return e
       })
     })
     setState(true)

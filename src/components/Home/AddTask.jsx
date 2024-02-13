@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
 
-const AddTask = ({setTasks, setCurrentlyAdding, tasks}) => {
+const AddTask = ({ activeUser, setTasks, setCurrentlyAdding, gen_task_id, user}) => {
   const [task, setTask] = useState({
     task_name: "",
     task_content: "",
@@ -13,26 +13,39 @@ const AddTask = ({setTasks, setCurrentlyAdding, tasks}) => {
       [name]: value,
     });
   };
-  const clearInput = ()=> {
-    task.task_name = ''
-    task.task_content = ''
-  }
-  const gen_task_id = () => {
-    var last_element_id;
-    if (tasks.length != 0) {
-      last_element_id = tasks[tasks.length - 1].taskId;
-    } else {
-      last_element_id = 0;
-    }
-    return last_element_id + 1;
-  };
+  
+  // algorithm to add a new task to tasks repect to userId
   const addTask = () => {
     task["taskId"] = gen_task_id();
     task['status'] = 'not_completed'
-    setTasks((old_tasks) => {
-      return [...old_tasks, task];
+    console.log('clicked');
+    console.log('add ',task);
+    setTasks((old_tasks)=>{
+      var updated_tasks;
+      var user_exist = false;
+      updated_tasks = old_tasks.map((t)=>{
+        if(t.userId == activeUser.userId){
+          user_exist = true
+          return {
+            userId:parseInt(activeUser.userId),
+            tasks:[...t.tasks, task]
+          }
+        }
+        return t
+      })
+      if(!user_exist){
+        updated_tasks = [
+          ...old_tasks,
+          {
+            userId:activeUser.userId,
+            tasks:[task]
+          }
+        ]
+      }
+      return updated_tasks
     });
   };
+  
   return (
     <div className="add-task-container flex justify-center items-center absolute  top-0 left-0 bottom-0 right-0 bg-black bg-opacity-30">
       <div className="add-task flex flex-col p-5 bg-white">
