@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
 
-const AddTask = ({ activeUser, setTasks, setCurrentlyAdding, gen_task_id, user}) => {
+const AddTask = ({ activeUser, setTasks, setCurrentlyAdding, gen_task_id}) => {
   const [task, setTask] = useState({
     task_name: "",
     task_content: "",

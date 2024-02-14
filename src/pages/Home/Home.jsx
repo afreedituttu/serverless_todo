@@ -34,7 +34,22 @@ const Home = () => {
 
   const delete_task = (id) => {
     setTasks((old_tasks)=>{
-      return old_tasks.filter(task=>task.taskId!=id)
+      return old_tasks.map((user_task)=>{
+        if(user_task.userId == activeUser.userId){
+          return {
+            userId:activeUser.userId,
+            tasks:user_task.tasks.map((task)=>{
+              if(task.taskId!=id){
+                return task
+              }else{
+                return {}
+              }
+            })
+          }
+        }else{
+          return user_task
+        }
+      })
     })
   }
   const gen_task_id = () => {
@@ -71,7 +86,7 @@ const Home = () => {
               </button>
             </div>
             {user_tasks.map((task, index) => {
-              if(task.status!='completed'){
+              if(task.status=='not_completed'){
                 return (
                 <li key={index} className="task flex justify-between p-1 border-b-2 border-b-gray-500">
                   <div className="task-details">

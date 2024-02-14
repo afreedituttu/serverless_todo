@@ -8,10 +8,12 @@ const Profile = () => {
   
   function find_user_task(){
     const temp_user_tasks = tasks.find((t)=>{
-      if(t.userId == activeUser.userId){
-        return t
+      if(t.userId == parseInt(activeUser.userId)){
+        console.log(t);
+        return t.tasks
       }
     })
+    console.log('found ', temp_user_tasks);
     if(!temp_user_tasks){
       return []
     }
@@ -19,11 +21,11 @@ const Profile = () => {
   }
   
   const [user_tasks, set_user_tasks] = useState(find_user_task())
-  console.log('usertasks ', user_tasks);
+  console.log('usertasks profile', user_tasks);
 
   useEffect(()=>{
     set_user_tasks(find_user_task())
-  }, [tasks])
+  }, [])
 
   return (
     <div className='wrapper'>
@@ -33,8 +35,6 @@ const Profile = () => {
             <input value={activeUser.username} type="text" name='name' className=' p-2 text-xl border-b-2 border-b-gray-400 my-2 w-full' />
             <input value={activeUser.password} type="email" name='email' className=' p-2 text-xl border-b-2 border-b-gray-400 my-2 w-full' />
             <input value={activeUser.age} type="number" name='age' className=' p-2 text-xl border-b-2 border-b-gray-400 my-2 w-full' />
-            <button className='px-3 py-1 bg-blue-800 m-1 text-white'>Update Profile</button>
-            <button className='px-3 py-1 bg-red-800 m-1 text-white'>Delete</button>
           </div>
           <div className="current-tasks">
           <h1 className=' text-2xl'>Current tasks</h1>

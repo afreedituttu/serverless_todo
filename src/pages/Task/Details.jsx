@@ -12,7 +12,7 @@ const Details = () => {
   function find_user_task(){
     const temp_user_tasks = tasks.find((t)=>{
       if(t.userId == activeUser.userId){
-        return t
+        return t.tasks
       }
     })
     if(!temp_user_tasks){
@@ -21,7 +21,7 @@ const Details = () => {
     return temp_user_tasks.tasks
   }
   
-  const user_tasks = find_user_task();
+  const [user_tasks, set_user_tasks] = useState(find_user_task())
 
   console.log('usertasks ', user_tasks);
 
@@ -35,14 +35,18 @@ const Details = () => {
       setTask(result)
     }
     fetchTask(taskId)
-  }, [])
+  }, [tasks])
+  useEffect(()=>{
+    set_user_tasks(find_user_task())
+  }, [tasks])
 
   const complete_task = (id)=> {
     setTasks((old_tasks)=>{
       return old_tasks.map((e)=>{
         if(e.userId == activeUser.userId){
-          function modify_task(){
-            return e.tasks.map((t)=>{
+          return {
+            userId:activeUser.userId,
+            tasks:e.tasks.map((t)=>{
               if(t.taskId == id){
                 return {
                   ...t,
@@ -52,18 +56,15 @@ const Details = () => {
                 return t
               }
             })
-          }
-          
-          return {
-            userID:activeUser.userID,
-            tasks:modify_task()
           }          
+        }else{
+          return e
         }
-        return e
       })
     })
     setState(true)
   }
+  console.log('details ', tasks);
   return (
     <div className='wrapper'>
       
